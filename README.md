@@ -1,4 +1,4 @@
-# geekly-practice
+# CakePHP-practice
 
 Next.js（App Router）+ TypeScript + CSS Modules + ヘッドレス WordPress で作った、求人サイト風の練習用アプリです。
 devcontainer で **Next.js / WordPress / MySQL** がまとめて起動します。
