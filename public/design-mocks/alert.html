@@ -1,0 +1,365 @@
+<!doctype html>
+<!-- Figma 取り込み練習用のデザインカンプ（アプリ本体では使わない。練習が終わったら削除してよい） -->
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>Alert – Design</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          "Hiragino Sans",
+          "Noto Sans JP",
+          sans-serif;
+        background: #f5f7fa;
+        color: #1f2933;
+        line-height: 1.7;
+        padding: 48px;
+      }
+      h1 {
+        font-size: 28px;
+        margin-bottom: 4px;
+      }
+      .lead {
+        color: #5f6b7a;
+        font-size: 14px;
+        margin-bottom: 40px;
+      }
+      h2 {
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        color: #5f6b7a;
+        text-transform: uppercase;
+        margin: 40px 0 16px;
+      }
+      .board {
+        background: #fff;
+        border: 1px solid #dde3ea;
+        border-radius: 12px;
+        padding: 32px;
+        display: grid;
+        gap: 16px;
+        width: 640px;
+      }
+      .label {
+        font-size: 12px;
+        color: #5f6b7a;
+        font-family: ui-monospace, Menlo, monospace;
+      }
+
+      /* ---- Alert 本体 ---- */
+      .alert {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 12px 16px;
+        border-radius: 6px;
+        border: 1px solid;
+        border-left-width: 4px;
+        font-size: 14px;
+      }
+      .icon {
+        width: 20px;
+        height: 20px;
+        flex: none;
+        margin-top: 2px;
+      }
+      .body {
+        flex: 1;
+        min-width: 0;
+      }
+      .title {
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 1.6;
+      }
+      .desc {
+        color: #1f2933;
+      }
+      .action {
+        display: inline-block;
+        margin-top: 8px;
+        font-weight: 700;
+        text-decoration: underline;
+        font-size: 14px;
+      }
+      .close {
+        width: 28px;
+        height: 28px;
+        border: 0;
+        background: transparent;
+        border-radius: 6px;
+        display: grid;
+        place-items: center;
+        flex: none;
+        margin: -2px -6px 0 0;
+        color: #5f6b7a;
+      }
+
+      .info {
+        background: #e6f0fb;
+        border-color: #b6d4f2;
+        border-left-color: #0b6bcb;
+      }
+      .info .icon,
+      .info .title,
+      .info .action {
+        color: #0b6bcb;
+      }
+      .success {
+        background: #ebfbee;
+        border-color: #b2e5bd;
+        border-left-color: #2b8a3e;
+      }
+      .success .icon,
+      .success .title,
+      .success .action {
+        color: #2b8a3e;
+      }
+      .warning {
+        background: #fff4db;
+        border-color: #ffd98a;
+        border-left-color: #f59f00;
+      }
+      .warning .icon,
+      .warning .title,
+      .warning .action {
+        color: #8a5a00;
+      }
+      .error {
+        background: #fff5f5;
+        border-color: #f5c2c2;
+        border-left-color: #c92a2a;
+      }
+      .error .icon,
+      .error .title,
+      .error .action {
+        color: #c92a2a;
+      }
+
+      /* ---- 仕様表 ---- */
+      table {
+        border-collapse: collapse;
+        font-size: 13px;
+        width: 640px;
+        background: #fff;
+        border: 1px solid #dde3ea;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 8px 12px;
+        border-bottom: 1px solid #dde3ea;
+        vertical-align: top;
+      }
+      th {
+        background: #f5f7fa;
+        font-weight: 700;
+      }
+      code {
+        font-family: ui-monospace, Menlo, monospace;
+        font-size: 12px;
+      }
+      .swatch {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+        vertical-align: -1px;
+        margin-right: 6px;
+        border: 1px solid rgb(0 0 0 / 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Alert</h1>
+    <p class="lead">
+      ユーザーへのお知らせ・結果・エラーを伝えるコンポーネント。4 種類の variant
+      と、タイトル／アクション／閉じるボタンの有無を持つ。
+    </p>
+
+    <h2>Variants</h2>
+    <div class="board">
+      <div class="label">variant="info"</div>
+      <div class="alert info" role="status">
+        <svg class="icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path
+            d="M10 1.667a8.333 8.333 0 1 0 0 16.666A8.333 8.333 0 0 0 10 1.667Zm.833 12.5H9.167V9.167h1.666v5Zm0-6.667H9.167V5.833h1.666V7.5Z"
+          />
+        </svg>
+        <div class="body">
+          <p class="title">メンテナンスのお知らせ</p>
+          <p class="desc">9月25日 2:00〜4:00 の間、求人検索がご利用いただけません。</p>
+        </div>
+      </div>
+
+      <div class="label">variant="success"</div>
+      <div class="alert success" role="status">
+        <svg class="icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path
+            d="M10 1.667a8.333 8.333 0 1 0 0 16.666A8.333 8.333 0 0 0 10 1.667Zm-1.667 12.5L4.167 10l1.175-1.175 2.991 2.983 6.325-6.325 1.175 1.184-7.5 7.5Z"
+          />
+        </svg>
+        <div class="body">
+          <p class="title">応募が完了しました</p>
+          <p class="desc">企業からの連絡をお待ちください。応募履歴はマイページで確認できます。</p>
+        </div>
+      </div>
+
+      <div class="label">variant="warning"</div>
+      <div class="alert warning" role="status">
+        <svg class="icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path
+            d="M.833 17.5h18.334L10 1.667.833 17.5Zm10-2.5H9.167v-1.667h1.666V15Zm0-3.333H9.167V8.333h1.666v3.334Z"
+          />
+        </svg>
+        <div class="body">
+          <p class="title">まもなく掲載終了</p>
+          <p class="desc">この求人は 3 日後に掲載を終了します。</p>
+        </div>
+      </div>
+
+      <div class="label">variant="error"</div>
+      <div class="alert error" role="alert">
+        <svg class="icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path
+            d="M10 1.667a8.333 8.333 0 1 0 0 16.666A8.333 8.333 0 0 0 10 1.667Zm.833 12.5H9.167V12.5h1.666v1.667Zm0-3.334H9.167v-5h1.666v5Z"
+          />
+        </svg>
+        <div class="body">
+          <p class="title">送信できませんでした</p>
+          <p class="desc">通信エラーが発生しました。時間をおいて再度お試しください。</p>
+        </div>
+      </div>
+    </div>
+
+    <h2>Options</h2>
+    <div class="board">
+      <div class="label">title なし</div>
+      <div class="alert info" role="status">
+        <svg class="icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path
+            d="M10 1.667a8.333 8.333 0 1 0 0 16.666A8.333 8.333 0 0 0 10 1.667Zm.833 12.5H9.167V9.167h1.666v5Zm0-6.667H9.167V5.833h1.666V7.5Z"
+          />
+        </svg>
+        <div class="body">
+          <p class="desc">検索条件に一致する求人が 0 件でした。条件を変えてお試しください。</p>
+        </div>
+      </div>
+
+      <div class="label">action あり（リンク）</div>
+      <div class="alert error" role="alert">
+        <svg class="icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path
+            d="M10 1.667a8.333 8.333 0 1 0 0 16.666A8.333 8.333 0 0 0 10 1.667Zm.833 12.5H9.167V12.5h1.666v1.667Zm0-3.334H9.167v-5h1.666v5Z"
+          />
+        </svg>
+        <div class="body">
+          <p class="title">コラムを取得できませんでした</p>
+          <p class="desc">WordPress に接続できません。</p>
+          <a class="action" href="#">再試行する</a>
+        </div>
+      </div>
+
+      <div class="label">onClose あり（閉じるボタン）</div>
+      <div class="alert success" role="status">
+        <svg class="icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path
+            d="M10 1.667a8.333 8.333 0 1 0 0 16.666A8.333 8.333 0 0 0 10 1.667Zm-1.667 12.5L4.167 10l1.175-1.175 2.991 2.983 6.325-6.325 1.175 1.184-7.5 7.5Z"
+          />
+        </svg>
+        <div class="body"><p class="title">お気に入りに追加しました</p></div>
+        <button class="close" aria-label="閉じる">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path
+              d="M12.667 4.273 11.727 3.333 8 7.06 4.273 3.333l-.94.94L7.06 8l-3.727 3.727.94.94L8 8.94l3.727 3.727.94-.94L8.94 8l3.727-3.727Z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <h2>Spec</h2>
+    <table>
+      <tr>
+        <th>項目</th>
+        <th>値</th>
+      </tr>
+      <tr>
+        <td>padding</td>
+        <td><code>12px 16px</code></td>
+      </tr>
+      <tr>
+        <td>角丸</td>
+        <td><code>6px</code>（= <code>--radius</code>）</td>
+      </tr>
+      <tr>
+        <td>枠線</td>
+        <td><code>1px</code>、左だけ <code>4px</code></td>
+      </tr>
+      <tr>
+        <td>アイコン</td>
+        <td><code>20×20px</code>、本文との間隔 <code>12px</code></td>
+      </tr>
+      <tr>
+        <td>タイトル</td>
+        <td><code>15px / bold</code></td>
+      </tr>
+      <tr>
+        <td>本文</td>
+        <td><code>14px / regular</code>、文字色 <code>#1f2933</code></td>
+      </tr>
+      <tr>
+        <td>アクション</td>
+        <td><code>14px / bold / 下線</code>、本文の <code>8px</code> 下</td>
+      </tr>
+      <tr>
+        <td>role</td>
+        <td>error は <code>alert</code>、それ以外は <code>status</code></td>
+      </tr>
+    </table>
+
+    <h2>Colors</h2>
+    <table>
+      <tr>
+        <th>variant</th>
+        <th>背景</th>
+        <th>枠線</th>
+        <th>左線・アイコン・タイトル</th>
+      </tr>
+      <tr>
+        <td>info</td>
+        <td><span class="swatch" style="background: #e6f0fb"></span><code>#e6f0fb</code></td>
+        <td><span class="swatch" style="background: #b6d4f2"></span><code>#b6d4f2</code></td>
+        <td><span class="swatch" style="background: #0b6bcb"></span><code>#0b6bcb</code></td>
+      </tr>
+      <tr>
+        <td>success</td>
+        <td><span class="swatch" style="background: #ebfbee"></span><code>#ebfbee</code></td>
+        <td><span class="swatch" style="background: #b2e5bd"></span><code>#b2e5bd</code></td>
+        <td><span class="swatch" style="background: #2b8a3e"></span><code>#2b8a3e</code></td>
+      </tr>
+      <tr>
+        <td>warning</td>
+        <td><span class="swatch" style="background: #fff4db"></span><code>#fff4db</code></td>
+        <td><span class="swatch" style="background: #ffd98a"></span><code>#ffd98a</code></td>
+        <td>
+          <span class="swatch" style="background: #f59f00"></span
+          ><code>#f59f00</code>（アイコン・タイトルは <code>#8a5a00</code>）
+        </td>
+      </tr>
+      <tr>
+        <td>error</td>
+        <td><span class="swatch" style="background: #fff5f5"></span><code>#fff5f5</code></td>
+        <td><span class="swatch" style="background: #f5c2c2"></span><code>#f5c2c2</code></td>
+        <td><span class="swatch" style="background: #c92a2a"></span><code>#c92a2a</code></td>
+      </tr>
+    </table>
+  </body>
+</html>

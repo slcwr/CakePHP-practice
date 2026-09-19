@@ -1,0 +1,35 @@
+{
+  "name": "geekly-practice (Next.js + CakePHP + WordPress)",
+  "dockerComposeFile": "compose.yaml",
+  "service": "app",
+  "runServices": ["app", "db", "wordpress", "wpcli", "cakephp", "cake-init"],
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
+  "forwardPorts": [3000, 6006, 8080, 8765],
+  "portsAttributes": {
+    "3000": { "label": "Next.js" },
+    "6006": { "label": "Storybook" },
+    "8080": { "label": "WordPress (admin / admin)" },
+    "8765": { "label": "CakePHP (求人 API)" }
+  },
+  // node_modules は名前付きボリューム（Mac でのI/O高速化）。初回は root 所有なので chown する
+  "postCreateCommand": "sudo chown -R node:node node_modules && npm ci",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "vitest.explorer",
+        "bmewburn.vscode-intelephense-client",
+        "GitHub.copilot",
+        "GitHub.copilot-chat"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "typescript.tsdk": "node_modules/typescript/lib"
+      }
+    }
+  },
+  "remoteUser": "node"
+}

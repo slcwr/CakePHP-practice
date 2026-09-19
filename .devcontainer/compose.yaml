@@ -1,0 +1,128 @@
+name: geekly-practice
+
+services:
+  # Next.js 開発用コンテナ（VS Code はここにアタッチする）
+  app:
+    image: mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm
+    command: sleep infinity
+    volumes:
+      - ..:/workspace:cached
+      - node_modules:/workspace/node_modules
+    environment:
+      # コンテナ間通信なのでサービス名で WordPress / CakePHP に到達する
+      WORDPRESS_API_URL: http://wordpress/wp-json/wp/v2
+      JOBS_API_URL: http://cakephp:8765
+      REVALIDATE_SECRET: dev-secret
+      NEXT_TELEMETRY_DISABLED: "1"
+    depends_on:
+      - wordpress
+      - cakephp
+
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db_data:/var/lib/mysql
+      # jobs データベース（CakePHP 用）を作る。ボリュームが空のときだけ実行される
+      - ./mysql-init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  # ヘッドレスCMSとして使う WordPress（管理画面: http://localhost:8080/wp-admin）
+  wordpress:
+    image: wordpress:6-php8.3-apache
+    ports:
+      - "8080:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', 'http://localhost:8080');
+        define('WP_SITEURL', 'http://localhost:8080');
+        define('NEXT_REVALIDATE_URL', 'http://app:3000/api/revalidate');
+        define('NEXT_REVALIDATE_SECRET', 'dev-secret');
+    volumes:
+      - wp_data:/var/www/html
+      - ../wordpress/mu-plugins:/var/www/html/wp-content/mu-plugins:ro
+
+  # 求人 API（CakePHP 5）。Next.js からは http://cakephp:8765 で参照する
+  cakephp:
+    build: &cake_build
+      context: .
+      dockerfile: cakephp.Dockerfile
+    image: geekly-practice/cakephp:dev
+    ports:
+      - "8765:8765"
+    # バインドマウントしたソースを node ユーザー（uid 1000）と同じ権限で扱う
+    user: "1000:1000"
+    working_dir: /workspace/cakephp
+    environment: &cake_env
+      DB_HOST: db
+      DB_DATABASE: jobs
+      DB_USERNAME: cakephp
+      DB_PASSWORD: cakephp
+      DEBUG: "true"
+      SECURITY_SALT: dev-salt-for-practice-only
+      HOME: /tmp
+      # php -S は既定で1リクエストずつしか捌けない。
+      # トップページは Suspense で複数の fetch が同時に飛ぶのでワーカーを増やす
+      PHP_CLI_SERVER_WORKERS: "4"
+    volumes:
+      - ..:/workspace:cached
+    depends_on:
+      cake-init:
+        condition: service_completed_successfully
+    command: ["php", "-S", "0.0.0.0:8765", "-t", "webroot", "webroot/index.php"]
+
+  # composer install → マイグレーション → 初期データ投入。起動のたびに走るが差分だけなので速い
+  cake-init:
+    build: *cake_build
+    image: geekly-practice/cakephp:dev
+    user: "1000:1000"
+    working_dir: /workspace/cakephp
+    environment: *cake_env
+    volumes:
+      - ..:/workspace:cached
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["sh", "/workspace/cakephp/setup.sh"]
+    restart: "no"
+
+  # 初回だけ WordPress をインストールしてサンプル記事を投入する
+  wpcli:
+    image: wordpress:cli-php8.3
+    user: "33:33"
+    depends_on:
+      db:
+        condition: service_healthy
+      wordpress:
+        condition: service_started
+    environment:
+      HOME: /tmp
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+    volumes:
+      - wp_data:/var/www/html
+      - ../wordpress/setup.sh:/setup.sh:ro
+    command: ["sh", "/setup.sh"]
+    restart: "no"
+
+volumes:
+  node_modules:
+  db_data:
+  wp_data:

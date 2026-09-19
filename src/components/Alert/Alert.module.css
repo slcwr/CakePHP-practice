@@ -1,0 +1,41 @@
+/* Alert.module.css */
+
+/* 共通：色は変数で受け取る */
+.alert {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--alert-border);
+  border-left: 4px solid var(--alert-accent);
+  background: var(--alert-bg);
+}
+
+.title {
+  color: var(--alert-accent);   /* アイコンとアクションも同じ変数を使う */
+}
+
+/* variant ごと：変数の値だけ変える */
+.info {
+  --alert-bg: #e6f0fb;
+  --alert-border: #b6d4f2;
+  --alert-accent: #0b6bcb;
+}
+
+.success {
+  --alert-bg: #e6f0fb;
+  --alert-border: #2b8a3e;
+  --alert-accent: #2b8a3e;
+}
+
+.warning {
+  --alert-bg: #e6f0fb;
+  --alert-border: #f59f00;
+  --alert-accent: #fff4db;
+}
+
+.error {
+  --alert-bg: #fff5f5;
+  --alert-border: #f5c2c2;
+  --alert-accent: #c92a2a;
+}
