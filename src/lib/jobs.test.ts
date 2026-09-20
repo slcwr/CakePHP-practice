@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { filterJobs, PER_PAGE } from "@/lib/jobs";
+import { filterJobs, PER_PAGE } from "@/lib/filter-jobs";
 import { jobs } from "@/data/jobs";
 
 describe("filterJobs", () => {

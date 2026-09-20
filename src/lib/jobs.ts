@@ -1,62 +1,90 @@
+import "server-only";
 import { cache } from "react";
-import { jobs } from "@/data/jobs";
+import type { z } from "zod";
+import { apiJobSchema, idsSchema, searchResultSchema } from "@/lib/jobs.schema";
 import type { Job, JobSearchParams, JobSearchResult } from "@/types/job";
 
-export const PER_PAGE = 5;
+export { PER_PAGE } from "@/lib/filter-jobs";
 
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+const API_URL = process.env.JOBS_API_URL ?? "http://localhost:8765";
 
-/** 純粋関数としての検索ロジック（ユニットテスト対象） */
-export function filterJobs(source: Job[], params: JobSearchParams): JobSearchResult {
-  const keyword = params.keyword?.trim().toLowerCase();
-  const filtered = source.filter((job) => {
-    if (params.category && job.category !== params.category) return false;
-    if (params.remote && !job.remote) return false;
-    if (keyword) {
-      const haystack = [job.title, job.company, job.description, ...job.skills]
-        .join(" ")
-        .toLowerCase();
-      if (!haystack.includes(keyword)) return false;
-    }
-    return true;
-  });
+export class JobsApiError extends Error {}
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
-  const page = Math.min(Math.max(1, params.page ?? 1), totalPages);
-  const start = (page - 1) * PER_PAGE;
+// ---- CakePHP API（JOBS_API_URL）へのデータアクセス層 ----
 
-  return {
-    items: filtered.slice(start, start + PER_PAGE),
-    total: filtered.length,
-    page,
-    totalPages,
-  };
+type FetchOptions = {
+  /** ISR の再検証間隔（秒）。省略時はキャッシュしない */
+  revalidate?: number;
+};
+
+async function jobsFetch(path: string, { revalidate }: FetchOptions = {}): Promise<Response> {
+  let res: Response;
+  try {
+    res = await fetch(`${API_URL}${path}`, {
+      // API が無応答のときにページ全体が待ち続けないよう上限を設ける
+      signal: AbortSignal.timeout(5000),
+      next: revalidate === undefined ? undefined : { revalidate },
+    });
+  } catch (cause) {
+    throw new JobsApiError(`求人 API に接続できません: ${path}`, { cause });
+  }
+
+  // 404 は「該当なし」として呼び出し側で扱うので、ここでは投げない
+  if (!res.ok && res.status !== 404) {
+    throw new JobsApiError(`求人 API がエラーを返しました: ${res.status} ${path}`);
+  }
+  return res;
 }
 
-// ---- 以下はバックエンド API 呼び出しを模したデータアクセス層 ----
-// 実案件では fetch(`${process.env.API_URL}/jobs?...`) に置き換わる想定
+async function parseJson<T>(res: Response, schema: z.ZodType<T>, path: string): Promise<T> {
+  const parsed = schema.safeParse(await res.json());
+  if (!parsed.success) {
+    throw new JobsApiError(`求人 API のレスポンス形式が想定と異なります: ${path}`);
+  }
+  return parsed.data;
+}
 
 export async function searchJobs(params: JobSearchParams): Promise<JobSearchResult> {
-  await sleep(400); // loading.tsx / Suspense の確認用に遅延
-  return filterJobs(jobs, params);
+  const query = new URLSearchParams();
+  if (params.keyword) query.set("keyword", params.keyword);
+  if (params.category) query.set("category", params.category);
+  if (params.remote) query.set("remote", "1");
+  if (params.page) query.set("page", String(params.page));
+
+  // 検索結果は毎リクエスト最新を返す（/jobs は SSR）
+  const path = `/jobs?${query}`;
+  return parseJson(await jobsFetch(path), searchResultSchema, path);
 }
 
 /** React の cache() で同一リクエスト内の重複呼び出し（generateMetadata と page）を1回にまとめる */
 export const getJob = cache(async (id: string): Promise<Job | undefined> => {
-  await sleep(100);
-  return jobs.find((job) => job.id === id);
+  const path = `/jobs/${encodeURIComponent(id)}`;
+  const res = await jobsFetch(path, { revalidate: 300 });
+  if (res.status === 404) return undefined;
+  return parseJson(res, apiJobSchema, path);
 });
 
 export async function getJobsByIds(ids: string[]): Promise<Job[]> {
-  await sleep(200);
-  return ids.flatMap((id) => jobs.find((job) => job.id === id) ?? []);
+  if (ids.length === 0) return [];
+
+  const path = `/jobs?ids=${encodeURIComponent(ids.join(","))}`;
+  const { items } = await parseJson(await jobsFetch(path), searchResultSchema, path);
+  return items;
 }
 
 export async function getLatestJobs(limit = 3): Promise<Job[]> {
-  await sleep(600);
-  return [...jobs].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt)).slice(0, limit);
+  // API は published_at の新着順に返すので、先頭から必要な件数だけ使う
+  const path = "/jobs";
+  const { items } = await parseJson(
+    await jobsFetch(path, { revalidate: 60 }),
+    searchResultSchema,
+    path,
+  );
+  return items.slice(0, limit);
 }
 
 export async function getAllJobIds(): Promise<string[]> {
-  return jobs.map((job) => job.id);
+  const path = "/jobs/ids";
+  const { ids } = await parseJson(await jobsFetch(path, { revalidate: 300 }), idsSchema, path);
+  return ids;
 }
