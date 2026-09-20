@@ -12,7 +12,10 @@
 }
 
 .title {
-  color: var(--alert-accent);   /* アイコンとアクションも同じ変数を使う */
+  color: var(--alert-accent);
+  font-weight: 700;   /* Bold */
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 /* variant ごと：変数の値だけ変える */
@@ -23,13 +26,13 @@
 }
 
 .success {
-  --alert-bg: #e6f0fb;
+  --alert-bg: #ebfbee;
   --alert-border: #b2e5bd;
   --alert-accent: #2b8a3e;
 }
 
 .warning {
-  --alert-bg: #e6f0fb;
+  --alert-bg: #fff4db;
   --alert-border: #f59f00;
   --alert-accent: #8a5a00;
 }
