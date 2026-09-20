@@ -24,14 +24,14 @@
 
 .success {
   --alert-bg: #e6f0fb;
-  --alert-border: #2b8a3e;
+  --alert-border: #b2e5bd;
   --alert-accent: #2b8a3e;
 }
 
 .warning {
   --alert-bg: #e6f0fb;
   --alert-border: #f59f00;
-  --alert-accent: #fff4db;
+  --alert-accent: #8a5a00;
 }
 
 .error {
