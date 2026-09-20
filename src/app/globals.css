@@ -48,6 +48,7 @@ html {
 
 body {
   font-family:
+    var(--font-base),
     system-ui,
     -apple-system,
     "Hiragino Sans",

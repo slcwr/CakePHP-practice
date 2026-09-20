@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/Header/Header";
+import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -10,9 +11,15 @@ export const metadata: Metadata = {
   description: "Next.js App Router + ヘッドレス WordPress の練習用求人サイト",
 };
 
+const notoSansJP = Noto_Sans_JP({
+  subsets: ["latin"],
+  weight: ["400", "700"], // デザインで使われているウェイトだけ指定する
+  variable: "--font-base", // globals.css の body から参照する
+});
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ja">
+    <html lang="ja" className={notoSansJP.variable}>
       <body>
         <Header />
         <main>{children}</main>
