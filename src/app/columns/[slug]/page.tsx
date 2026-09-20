@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getColumnBySlug, getColumns } from "@/lib/wordpress";
-import { formatDate } from "@/lib/format";
+import { getColumnBySlug, getColumns } from "@/features/columns/api/wordpress";
+import { formatDate } from "@/shared/lib/format";
 import styles from "./page.module.css";
 
 export async function generateStaticParams() {

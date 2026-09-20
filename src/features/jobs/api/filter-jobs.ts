@@ -1,4 +1,4 @@
-import type { Job, JobSearchParams, JobSearchResult } from "@/types/job";
+import type { Job, JobSearchParams, JobSearchResult } from "@/features/jobs/types";
 
 /** 1ページあたりの件数（CakePHP 側の JobsTable::PER_PAGE と合わせる） */
 export const PER_PAGE = 5;

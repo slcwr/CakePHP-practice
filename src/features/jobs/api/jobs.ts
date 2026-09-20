@@ -1,10 +1,10 @@
 import "server-only";
 import { cache } from "react";
 import type { z } from "zod";
-import { apiJobSchema, idsSchema, searchResultSchema } from "@/lib/jobs.schema";
-import type { Job, JobSearchParams, JobSearchResult } from "@/types/job";
+import { apiJobSchema, idsSchema, searchResultSchema } from "@/features/jobs/api/jobs.schema";
+import type { Job, JobSearchParams, JobSearchResult } from "@/features/jobs/types";
 
-export { PER_PAGE } from "@/lib/filter-jobs";
+export { PER_PAGE } from "@/features/jobs/api/filter-jobs";
 
 const API_URL = process.env.JOBS_API_URL ?? "http://localhost:8765";
 

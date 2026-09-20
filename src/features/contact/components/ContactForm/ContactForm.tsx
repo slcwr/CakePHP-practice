@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { submitContact, type ContactState } from "@/app/contact/actions";
+import { submitContact, type ContactState } from "@/features/contact/actions";
 import styles from "./ContactForm.module.css";
 
 const initialState: ContactState = { status: "idle" };

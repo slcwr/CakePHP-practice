@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { JOB_CATEGORIES } from "@/types/job";
-import type { Job, JobSearchResult } from "@/types/job";
+import { JOB_CATEGORIES } from "@/features/jobs/types";
+import type { Job, JobSearchResult } from "@/features/jobs/types";
 
 /**
  * 求人 API（CakePHP）のレスポンス定義。

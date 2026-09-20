@@ -1,4 +1,4 @@
-import { JOB_CATEGORIES, type JobCategory, type JobSearchParams } from "@/types/job";
+import { JOB_CATEGORIES, type JobCategory, type JobSearchParams } from "@/features/jobs/types";
 
 type RawParams = Record<string, string | string[] | undefined>;
 

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { FavoriteJobList } from "@/components/FavoriteJobList/FavoriteJobList";
+import { FavoriteJobList } from "@/features/favorites/components/FavoriteJobList/FavoriteJobList";
 
 export const metadata: Metadata = {
   title: "お気に入り求人",

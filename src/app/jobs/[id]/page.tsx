@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllJobIds, getJob } from "@/lib/jobs";
-import { formatSalary } from "@/lib/format";
-import { JOB_CATEGORIES } from "@/types/job";
-import { FavoriteButton } from "@/components/FavoriteButton/FavoriteButton";
-import { SkillTag } from "@/components/SkillTag/SkillTag";
+import { getAllJobIds, getJob } from "@/features/jobs/api/jobs";
+import { formatSalary } from "@/shared/lib/format";
+import { JOB_CATEGORIES } from "@/features/jobs/types";
+import { FavoriteButton } from "@/features/favorites/components/FavoriteButton/FavoriteButton";
+import { SkillTag } from "@/shared/components/SkillTag/SkillTag";
 import styles from "./page.module.css";
 
 // ビルド時に全求人を静的生成（SSG）。新しい ID はアクセス時に生成される（dynamicParams=true）

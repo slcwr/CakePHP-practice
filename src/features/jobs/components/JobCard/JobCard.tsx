@@ -1,9 +1,9 @@
 import Link from "next/link";
-import type { Job } from "@/types/job";
-import { JOB_CATEGORIES } from "@/types/job";
-import { formatSalary } from "@/lib/format";
-import { SkillTag } from "@/components/SkillTag/SkillTag";
-import { FavoriteButton } from "@/components/FavoriteButton/FavoriteButton";
+import type { Job } from "@/features/jobs/types";
+import { JOB_CATEGORIES } from "@/features/jobs/types";
+import { formatSalary } from "@/shared/lib/format";
+import { SkillTag } from "@/shared/components/SkillTag/SkillTag";
+import { FavoriteButton } from "@/features/favorites/components/FavoriteButton/FavoriteButton";
 import styles from "./JobCard.module.css";
 
 type Props = {

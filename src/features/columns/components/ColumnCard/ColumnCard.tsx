@@ -1,7 +1,7 @@
 import Link from "next/link";
-import type { Column } from "@/types/wordpress";
-import { formatDate } from "@/lib/format";
-import { SkillTag } from "@/components/SkillTag/SkillTag";
+import type { Column } from "@/features/columns/types";
+import { formatDate } from "@/shared/lib/format";
+import { SkillTag } from "@/shared/components/SkillTag/SkillTag";
 import styles from "./ColumnCard.module.css";
 
 export function ColumnCard({ column }: { column: Column }) {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { ContactForm } from "@/components/ContactForm/ContactForm";
-import { getJob } from "@/lib/jobs";
+import { ContactForm } from "@/features/contact/components/ContactForm/ContactForm";
+import { getJob } from "@/features/jobs/api/jobs";
 
 export const metadata: Metadata = {
   title: "無料転職相談",

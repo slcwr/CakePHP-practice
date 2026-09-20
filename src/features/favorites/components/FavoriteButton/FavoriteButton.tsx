@@ -1,6 +1,6 @@
 "use client";
 
-import { useFavorites } from "@/hooks/useFavorites";
+import { useFavorites } from "@/features/favorites/hooks/useFavorites";
 import styles from "./FavoriteButton.module.css";
 
 type Props = {

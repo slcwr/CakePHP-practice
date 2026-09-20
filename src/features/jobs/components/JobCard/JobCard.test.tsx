@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { JobCard } from "./JobCard";
-import { jobs } from "@/data/jobs";
+import { jobs } from "@/features/jobs/fixtures";
 
 describe("JobCard", () => {
   const job = jobs[0];

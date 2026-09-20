@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { filterJobs, PER_PAGE } from "@/lib/filter-jobs";
-import { jobs } from "@/data/jobs";
+import { filterJobs, PER_PAGE } from "@/features/jobs/api/filter-jobs";
+import { jobs } from "@/features/jobs/fixtures";
 
 describe("filterJobs", () => {
   it("条件なしなら全件を1ページ目から返す", () => {

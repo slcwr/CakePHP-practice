@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { getColumns } from "@/lib/wordpress";
-import { ColumnCard } from "@/components/ColumnCard/ColumnCard";
+import { getColumns } from "@/features/columns/api/wordpress";
+import { ColumnCard } from "@/features/columns/components/ColumnCard/ColumnCard";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {

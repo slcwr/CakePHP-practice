@@ -1,4 +1,4 @@
-import type { Job } from "@/types/job";
+import type { Job } from "@/features/jobs/types";
 
 // 本来はバックエンド（Laravel/CakePHP など）の API から取得する想定のモックデータ
 export const jobs: Job[] = [

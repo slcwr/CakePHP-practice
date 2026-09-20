@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { JobCard } from "./JobCard";
-import { jobs } from "@/data/jobs";
+import { jobs } from "@/features/jobs/fixtures";
 
 const meta = {
   title: "Components/JobCard",

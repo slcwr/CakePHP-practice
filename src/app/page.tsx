@@ -1,10 +1,10 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import { getLatestJobs } from "@/lib/jobs";
-import { getColumns } from "@/lib/wordpress";
-import { JobCard } from "@/components/JobCard/JobCard";
-import { ColumnCard } from "@/components/ColumnCard/ColumnCard";
-import { JobSearchForm } from "@/components/JobSearchForm/JobSearchForm";
+import { getLatestJobs } from "@/features/jobs/api/jobs";
+import { getColumns } from "@/features/columns/api/wordpress";
+import { JobCard } from "@/features/jobs/components/JobCard/JobCard";
+import { ColumnCard } from "@/features/columns/components/ColumnCard/ColumnCard";
+import { JobSearchForm } from "@/features/jobs/components/JobSearchForm/JobSearchForm";
 import styles from "./page.module.css";
 
 // トップページ：静的生成 + ISR（60秒）。

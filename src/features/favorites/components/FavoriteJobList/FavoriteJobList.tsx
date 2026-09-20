@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { Job } from "@/types/job";
-import { useFavorites } from "@/hooks/useFavorites";
-import { JobCard } from "@/components/JobCard/JobCard";
+import type { Job } from "@/features/jobs/types";
+import { useFavorites } from "@/features/favorites/hooks/useFavorites";
+import { JobCard } from "@/features/jobs/components/JobCard/JobCard";
 
 type State = { status: "loading" } | { status: "success"; jobs: Job[] } | { status: "error" };
 

@@ -1,6 +1,6 @@
 import "server-only";
-import type { Column, WPPost } from "@/types/wordpress";
-import { stripHtml } from "@/lib/format";
+import type { Column, WPPost } from "@/features/columns/types";
+import { stripHtml } from "@/shared/lib/format";
 
 const API_URL = process.env.WORDPRESS_API_URL ?? "http://localhost:8080/wp-json/wp/v2";
 

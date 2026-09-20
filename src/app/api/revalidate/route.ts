@@ -1,5 +1,5 @@
 import { revalidateTag } from "next/cache";
-import { COLUMNS_TAG, columnTag } from "@/lib/wordpress";
+import { COLUMNS_TAG, columnTag } from "@/features/columns/api/wordpress";
 
 /**
  * WordPress（mu-plugin）から記事更新時に呼ばれる Webhook。

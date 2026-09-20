@@ -1,5 +1,5 @@
 import Form from "next/form";
-import { JOB_CATEGORIES, type JobSearchParams } from "@/types/job";
+import { JOB_CATEGORIES, type JobSearchParams } from "@/features/jobs/types";
 import styles from "./JobSearchForm.module.css";
 
 type Props = {

@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
-import { getJobsByIds, searchJobs } from "@/lib/jobs";
-import { parseJobSearchParams } from "@/lib/search-params";
+import { getJobsByIds, searchJobs } from "@/features/jobs/api/jobs";
+import { parseJobSearchParams } from "@/features/jobs/api/search-params";
 
 /**
  * GET /api/jobs?ids=1001,1002       → 指定IDの求人

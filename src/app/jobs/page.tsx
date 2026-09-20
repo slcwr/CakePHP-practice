@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { searchJobs } from "@/lib/jobs";
-import { buildJobsUrl, parseJobSearchParams } from "@/lib/search-params";
-import { JobCard } from "@/components/JobCard/JobCard";
-import { JobSearchForm } from "@/components/JobSearchForm/JobSearchForm";
-import { Pagination } from "@/components/Pagination/Pagination";
+import { searchJobs } from "@/features/jobs/api/jobs";
+import { buildJobsUrl, parseJobSearchParams } from "@/features/jobs/api/search-params";
+import { JobCard } from "@/features/jobs/components/JobCard/JobCard";
+import { JobSearchForm } from "@/features/jobs/components/JobSearchForm/JobSearchForm";
+import { Pagination } from "@/shared/components/Pagination/Pagination";
 
 export const metadata: Metadata = {
   title: "求人一覧",

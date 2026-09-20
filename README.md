@@ -72,13 +72,17 @@ npm run build && npm start
 wordpress/             setup.sh（wp-cli で初期化）/ mu-plugins（再検証 Webhook）
 scripts/mock-wp.mjs    WP REST API のモック
 src/
-  app/                 ルーティング（App Router）
-  components/          UI（CSS Modules / *.test.tsx / *.stories.tsx を同じ場所に配置）
-  hooks/useFavorites   CSR 用の状態
-  lib/jobs.ts          求人データアクセス層（本来はバックエンド API）
-  lib/wordpress.ts     WordPress クライアント（server-only）
-  types/
+  app/                 ルーティング（App Router）。ページは薄く保ち、中身は features から import する
+  features/            機能単位。関連するコンポーネント・API・型を同じ場所にまとめる
+    jobs/              api（CakePHP の求人 API クライアント / zod 検証）, components, types, fixtures
+    columns/           api（WordPress クライアント / server-only）, components, types
+    favorites/         hooks/useFavorites（CSR の状態）, components
+    contact/           actions.ts（Server Action）, components
+  shared/              機能に依存しない部品（Alert, SkillTag, Pagination, Header）と lib/format.ts
 ```
+
+コンポーネントは CSS Modules / `*.test.tsx` / `*.stories.tsx` を同じフォルダに置いています。
+`features` 同士は互いに import せず、共通で使うものは `shared/` に置きます。
 
 ## 練習課題（改修チケット風）
 

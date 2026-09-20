@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildJobsUrl, parseJobSearchParams } from "@/lib/search-params";
+import { buildJobsUrl, parseJobSearchParams } from "@/features/jobs/api/search-params";
 
 describe("parseJobSearchParams", () => {
   it("不正な値は無視する", () => {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Header } from "@/components/Header/Header";
+import { Header } from "@/shared/components/Header/Header";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 
