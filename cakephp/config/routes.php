@@ -56,12 +56,6 @@ return function (RouteBuilder $routes): void {
          * to use (in this case, templates/Pages/home.php)...
          */
         $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-
-        /*
-         * ...and connect the rest of 'Pages' controller's URLs.
-         */
-        $builder->connect('/pages/*', 'Pages::display');
-
         /*
          * 求人 API。Next.js（Server Component / Route Handler）から呼ばれる。
          * '/jobs/ids' は '/jobs/{id}' より先に接続する。
