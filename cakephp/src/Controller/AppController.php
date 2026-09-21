@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use Cake\Http\Response;
 
 /**
  * Application Controller
@@ -48,5 +49,23 @@ class AppController extends Controller
          * see https://book.cakephp.org/5/en/controllers/components/form-protection.html
          */
         //$this->loadComponent('FormProtection');
+    }
+
+    /**
+     * 配列を JSON のレスポンスとして返す。このアプリの全コントローラーで使う。
+     *
+     * @param array<string, mixed> $data レスポンスの中身
+     * @param int $status HTTP ステータスコード
+     * @return \Cake\Http\Response
+     */
+    protected function json(array $data, int $status = 200): Response
+    {
+        return $this->response
+            ->withStatus($status)
+            ->withType('application/json')
+            ->withStringBody(json_encode(
+                $data,
+                JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR,
+            ));
     }
 }

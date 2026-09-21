@@ -105,15 +105,4 @@ class JobsController extends AppController
 
         return $this->json(['items' => $items, 'total' => count($items)]);
     }
-
-    /**
-     * @param array<string, mixed> $data
-     */
-    private function json(array $data, int $status = 200): Response
-    {
-        return $this->response
-            ->withStatus($status)
-            ->withType('application/json')
-            ->withStringBody((string)json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
-    }
 }
