@@ -31,7 +31,6 @@
 </head>
 <body>
     <div class="error-container">
-        <?= $this->Flash->render() ?>
         <?= $this->fetch('content') ?>
         <?= $this->Html->link(__('Back'), 'javascript:history.back()') ?>
     </div>

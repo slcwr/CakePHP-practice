@@ -41,7 +41,7 @@ class AppController extends Controller
     {
         parent::initialize();
 
-        $this->loadComponent('Flash');
+        // Flash コンポーネントは読み込まない（JSON API 専用でメッセージ表示の画面がないため）
 
         /*
          * Enable the following component for recommended CakePHP form protection settings.
