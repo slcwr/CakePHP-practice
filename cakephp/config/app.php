@@ -180,6 +180,8 @@ return [
         'trace' => true,
         'ignoredDeprecationPaths' => [],
         'traceFormat' => null,
+        // JSON API 専用アプリなので、例外は HTML ではなく JSON で返す
+        'exceptionRenderer' => \App\Error\JsonExceptionRenderer::class,
     ],
 
     /*
