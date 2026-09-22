@@ -1,6 +1,7 @@
 "use server";
 
 import { z } from "zod";
+import { createContact } from "@/features/contact/api/contacts";
 
 const schema = z.object({
   name: z
@@ -46,9 +47,30 @@ export async function submitContact(
     return { status: "error", errors, values: raw };
   }
 
-  // 実案件ではここでバックエンド API に POST する
-  await new Promise((r) => setTimeout(r, 800));
-  console.log("[contact] received", parsed.data);
+  try {
+    const result = await createContact({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      message: parsed.data.message,
+      jobId: parsed.data.jobId,
+    });
+
+    // サーバー側の検証で弾かれた場合（フロントの zod より厳しい条件があり得る）
+    if (!result.ok) {
+      const errors: Partial<Record<Fields, string>> = {};
+      for (const field of ["name", "email", "message"] as const) {
+        const message = result.errors[field];
+        if (message) errors[field] = message;
+      }
+      return { status: "error", errors, values: raw };
+    }
+  } catch {
+    return {
+      status: "error",
+      errors: { message: "送信に失敗しました。時間をおいて再度お試しください。" },
+      values: raw,
+    };
+  }
 
   return {
     status: "success",

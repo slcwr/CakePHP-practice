@@ -70,6 +70,12 @@ return function (RouteBuilder $routes): void {
             ->setMethods(['GET']);
 
         /*
+         * お問い合わせ。Next.js の Server Action から POST される。
+         */
+        $builder->connect('/contacts', ['controller' => 'Contacts', 'action' => 'add'])
+            ->setMethods(['POST']);
+
+        /*
          * Connect catchall routes for all controllers.
          *
          * The `fallbacks` method is a shortcut for
