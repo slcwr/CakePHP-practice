@@ -7,6 +7,9 @@ const eslintConfig = defineConfig([
   ...nextTs,
   // Override default ignores of eslint-config-next.
   globalIgnores([
+    // 別言語のコード。ESLint の対象外
+    "cakephp/**",
+    "wordpress/**",
     // Default ignores of eslint-config-next:
     ".next/**",
     "out/**",

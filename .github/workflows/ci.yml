@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  frontend:
+    name: Next.js (lint / typecheck / test)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      # ユニットテストに加えて、全ストーリーの描画・インタラクション（play）・
+      # アクセシビリティ検査（axe）も実行される（src/test/stories.test.tsx）
+      - name: Test
+        run: npm test
+
+  # 補足: `npm run build` はまだ CI に入れていない。
+  # トップページと求人詳細がビルド時に CakePHP / WordPress へアクセスするため、
+  # バックエンドを起動するか、取得失敗時のフォールバックを実装する必要がある。

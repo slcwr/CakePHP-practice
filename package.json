@@ -23,6 +23,7 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@storybook/addon-a11y": "^10.6.0",
     "@storybook/addon-designs": "^11.1.4",
     "@storybook/nextjs-vite": "^10.6.0",
     "@testing-library/dom": "^10.4.2",
@@ -33,6 +34,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6.1.1",
+    "axe-core": "^4.13.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.5",
     "jsdom": "^30.0.1",
