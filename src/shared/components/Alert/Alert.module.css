@@ -42,3 +42,33 @@
   --alert-border: #f5c2c2;
   --alert-accent: #c92a2a;
 }
+.icon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  margin-top: 2px;
+  color: var(--alert-accent);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+}
+
+.desc {
+  font-size: 14px;
+  /* 背景は常に明るい色なので、ダークモードでも読めるよう文字色を固定する */
+  color: #1f2933;
+}
+
+.action {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.action a,
+.action button {
+  color: var(--alert-accent);
+  text-decoration: underline;
+}
