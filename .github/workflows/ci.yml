@@ -5,12 +5,19 @@ on:
     branches: [main]
   pull_request:
 
+# GITHUB_TOKEN は読み取りのみ（リポジトリ既定の権限に依存しない）
+permissions:
+  contents: read
+
 jobs:
   frontend:
     name: Next.js (lint / typecheck / test)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # 後続ステップ（npm ci の install スクリプト等）からトークンを読めないようにする
+          persist-credentials: false
 
       - uses: actions/setup-node@v4
         with:
