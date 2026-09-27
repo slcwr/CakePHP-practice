@@ -1,5 +1,6 @@
 import "server-only";
 import type { Column, WPPost } from "@/features/columns/types";
+import { sanitizeContentHtml } from "@/features/columns/api/sanitize";
 import { stripHtml } from "@/shared/lib/format";
 
 const API_URL = process.env.WORDPRESS_API_URL ?? "http://localhost:8080/wp-json/wp/v2";
@@ -28,7 +29,7 @@ function toColumn(post: WPPost): Column {
     slug: post.slug,
     title: stripHtml(post.title.rendered),
     excerpt: stripHtml(post.excerpt.rendered),
-    contentHtml: post.content.rendered,
+    contentHtml: sanitizeContentHtml(post.content.rendered),
     date: post.date,
     categories: terms
       .filter((t) => t.taxonomy === "category")

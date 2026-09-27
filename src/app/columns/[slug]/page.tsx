@@ -42,10 +42,7 @@ export default async function ColumnDetailPage({ params }: PageProps<"/columns/[
           <time dateTime={column.date}>{formatDate(column.date)}</time>
           {column.categories.length > 0 && ` ・ ${column.categories.map((c) => c.name).join(", ")}`}
         </p>
-        {/*
-          WordPress の本文 HTML をそのまま描画。
-          管理者のみが入稿する前提。外部入力が混ざるなら sanitize-html / DOMPurify でサニタイズする。
-        */}
+        {/* contentHtml は取得時（features/columns/api/wordpress.ts）にサニタイズ済み */}
         <div className={styles.content} dangerouslySetInnerHTML={{ __html: column.contentHtml }} />
       </article>
     </div>
