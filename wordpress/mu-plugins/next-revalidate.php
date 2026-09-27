@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function geekly_practice_notify_next(string $slug = ''): void
+function geekly_practice_notify_next(string $slug, string $status): void
 {
     if (!defined('NEXT_REVALIDATE_URL') || !defined('NEXT_REVALIDATE_SECRET')) {
         return;
@@ -21,7 +21,7 @@ function geekly_practice_notify_next(string $slug = ''): void
             'Content-Type'  => 'application/json',
             'Authorization' => 'Bearer ' . NEXT_REVALIDATE_SECRET,
         ],
-        'body' => wp_json_encode(['type' => 'post', 'slug' => $slug]),
+        'body' => wp_json_encode(['type' => 'post', 'slug' => $slug, 'status' => $status]),
     ]);
 }
 
@@ -31,6 +31,6 @@ add_action('transition_post_status', function ($new_status, $old_status, $post) 
         return;
     }
     if ($new_status === 'publish' || $old_status === 'publish') {
-        geekly_practice_notify_next($post->post_name);
+        geekly_practice_notify_next($post->post_name, $new_status);
     }
 }, 10, 3);
